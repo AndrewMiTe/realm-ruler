@@ -79,7 +79,7 @@ public class RealmManager {
     }
 
     @Override // from RequestItem
-    public void onUpdate(Procedure update) {
+    public void onUpdate(UpdateProcedure update) {
       throw new UnsupportedOperationException("Not supported yet.");
     }
 
