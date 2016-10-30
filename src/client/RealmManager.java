@@ -69,6 +69,25 @@ public class RealmManager {
     throw new UnsupportedOperationException("Not supported yet.");
   }
   
+  /**
+   * Returns an object that updates whenever changes are made to the requested
+   * resource data.
+   * @param resourceID number that identifies which resource data is requested.
+   * @return up-to-date resource data.
+   */
+  public RequestItem<Resource> requestResource(int resourceID) {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
+
+  /**
+   * Returns an list of objects that update whenever changes are made to the
+   * requested resource data they correspond to.
+   * @return all up-to-date resource data.
+   */
+  public List<RequestItem<Resource>> requestAllResources() {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
+  
   private static class RelamRequest<T> implements RequestItem {
 
     public RelamRequest() {
