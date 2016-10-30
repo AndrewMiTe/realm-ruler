@@ -39,11 +39,13 @@ public interface RequestItem<T> {
   /**
    * Requests that the realm manager accept and save changes made to the
    * requested object. If changes have since been made that invalidates the
-   * object, a checked exception is thrown. If the changes made are invalid, a
-   * runtime exception is thrown instead.
+   * object, a checked exception is thrown.
    * @param item item to be saved.
+   * @return {@code true} if the new data was saved successfully.
+   * @throws client.OutOfSyncException if time stamp on modified data item is
+   *         older then the current data it models.
    */
-  void set(T item);
+  boolean set(T item) throws OutOfSyncException;
 
   /**
    * Releases the manager of the request item from the obligation to update the
@@ -51,6 +53,11 @@ public interface RequestItem<T> {
    */
   void release();
   
-  void onUpdate(Procedure update);
+  /**
+   * Sets the task to be performed when the data has been updated so that the
+   * requesting caller can replace its out of sync item data.
+   * @param update task for informing the requesting caller to update.
+   */
+  void onUpdate(UpdateProcedure update);
 
 }
