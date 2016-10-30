@@ -28,13 +28,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
 /**
- *
+ * Factory for making View objects based on the methods called and input given.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
 public class ViewFactory {
   
-  public static View getMainView() {
-    return getView("Main Pane");
+  public static View getMapView() {
+    return getView("Map Pane");
   }
   
   public static View getView(String paneMsg) {
