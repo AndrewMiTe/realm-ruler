@@ -99,7 +99,7 @@ public class RealmManager {
     }
 
     @Override // from RequestItem
-    public void set(Object item) {
+    public boolean set(Object item) throws OutOfSyncException {
       throw new UnsupportedOperationException("Not supported yet.");
     }
     
