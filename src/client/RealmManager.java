@@ -90,6 +90,12 @@ public class RealmManager {
   
   private static class RelamRequest<T> implements RequestItem {
 
+    /**
+     * The procedure prescribed by the requesting caller for what to do when the
+     * item data has been changed.
+     */
+    private UpdateProcedure updater;
+    
     public RelamRequest() {
     }
 
@@ -109,7 +115,7 @@ public class RealmManager {
     }
 
     @Override // from RequestItem
-    public void onUpdate(UpdateProcedure update) {
+    public void onUpdate(UpdateProcedure updater) {
       throw new UnsupportedOperationException("Not supported yet.");
     }
 
