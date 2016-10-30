@@ -22,30 +22,30 @@
  * SOFTWARE.
  */
 
-package RealmRuler;
+package client;
 
 /**
- * 
+ * Feeds data to View objects based on what information about the realm they are
+ * currently requesting.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
 public class RealmManager {
   
-  private RealmManager instance = null;
+  private static final RealmManager INSTANCE = new RealmManager();
   
   /**
-   * Initializes the realm manager privately and without argument so as to
+   * Initializes the realm manager privately and without parameters so as to
    * encourage a proper singleton pattern.
    */
   private RealmManager() {
   }
   
   /**
-   * Returns an lazy instantiated singleton of the RealmManager class.
-   * @return singleton instance of realm manager.
+   * Returns the singleton RealmManager class.
+   * @return instance of realm manager.
    */
-  public RealmManager getInstance() {
-    if (instance == null) instance = new RealmManager();
-    return instance;
-  }
+  public static RealmManager getInstance() {
+    return INSTANCE;
+  }  
   
 }
