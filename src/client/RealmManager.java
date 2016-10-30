@@ -69,7 +69,7 @@ public class RealmManager {
     }
 
     @Override // from RequestItem
-    public void push(Object item) {
+    public void set(Object item) {
       throw new UnsupportedOperationException("Not supported yet.");
     }
     
@@ -78,6 +78,20 @@ public class RealmManager {
       throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override // from RequestItem
+    public void onUpdate(Procedure update) {
+      throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Used by the realm manager to update any changes to the requested item and
+     * inform the view that made the request that a change has occurred.
+     * @param item 
+     */
+    private void update(T item) {
+      throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
   }
   
 }
