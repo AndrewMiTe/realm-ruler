@@ -22,10 +22,9 @@
  * SOFTWARE.
  */
 
-package RealmRuler;
+package client;
 
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -34,16 +33,21 @@ import javafx.scene.layout.StackPane;
  */
 public class ViewFactory {
   
-  public static Pane getMainView() {
+  public static View getMainView() {
     return getView("Main Pane");
   }
   
-  public static Pane getView(String paneMsg) {
+  public static View getView(String paneMsg) {
+    // Create test button.
     Button btn = new Button();
     btn.setText(paneMsg);
     btn.setOnAction(e -> Client.setScene(getView("Next Pane")));
-    StackPane root = new StackPane();
-    root.getChildren().add(btn);
+    // Create and populate the inner pane.
+    StackPane inner = new StackPane();
+    inner.getChildren().add(btn);
+    // Create and populate the root pane.
+    View root = new View();
+    root.getChildren().add(inner);
     return root;
   }
   
