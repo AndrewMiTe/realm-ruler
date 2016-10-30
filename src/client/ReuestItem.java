@@ -43,12 +43,14 @@ public interface RequestItem<T> {
    * runtime exception is thrown instead.
    * @param item item to be saved.
    */
-  void push(T item);
+  void set(T item);
 
   /**
    * Releases the manager of the request item from the obligation to update the
    * item after changes are saved.
    */
   void release();
+  
+  void onUpdate(Procedure update);
 
 }
