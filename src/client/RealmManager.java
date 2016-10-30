@@ -49,11 +49,13 @@ public class RealmManager {
   }
   
   /**
-   * 
-   * @return
+   * Returns an object that updates whenever changes are made to the requested
+   * plot data.
+   * @param plotID number that identifies which plot data is requested.
+   * @return up-to-date plot data.
    */
-  public RequestItem<Plot> requestPlot() {
-    return new RelamRequest<>();
+  public RequestItem<Plot> requestPlot(int plotID) {
+    throw new UnsupportedOperationException("Not supported yet.");
   }
 
   private static class RelamRequest<T> implements RequestItem {
