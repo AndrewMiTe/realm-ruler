@@ -46,6 +46,36 @@ public class RealmManager {
    */
   public static RealmManager getInstance() {
     return INSTANCE;
-  }  
+  }
+  
+  /**
+   * 
+   * @return
+   */
+  public RequestItem<Plot> requestPlot() {
+    return new RelamRequest<>();
+  }
+
+  private static class RelamRequest<T> implements RequestItem {
+
+    public RelamRequest() {
+    }
+
+    @Override // from RequestItem
+    public T get() {
+      throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override // from RequestItem
+    public void push(Object item) {
+      throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override // from RequestItem
+    public void release() {
+      throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+  }
   
 }
