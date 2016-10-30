@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package client;
 
 import javafx.application.Application;
@@ -39,16 +38,13 @@ public class Client extends Application {
   
   public static int STAGE_HEIGHT = 320;
   
-  private static Stage primaryStage = null;
+  private Stage clientStage = null;
   
   @Override // from Application
-  public void start(Stage primaryStage) {
-    Client.primaryStage = primaryStage;
-    Scene scene = new Scene(ViewFactory.getMainView(), STAGE_WIDTH,
-        STAGE_HEIGHT);
-    primaryStage.setTitle("Realm Ruler");
-    primaryStage.setScene(scene);
-    primaryStage.show();
+  public void start(Stage primeStage) {
+    primeStage.setTitle("Realm Ruler");
+    clientStage = primeStage;
+    setScene(ViewFactory.getMainView());
   }
 
   /**
@@ -59,11 +55,11 @@ public class Client extends Application {
     launch(args);
   }
   
-  public static void setScene(Pane pane) {
-    if (primaryStage == null) throw new RuntimeException("Stage not set.");
+  public void setScene(Pane pane) {
+    if (clientStage == null) throw new RuntimeException("Stage not set.");
     Scene scene = new Scene(pane, STAGE_WIDTH, STAGE_HEIGHT);
-    primaryStage.setScene(scene);
-    primaryStage.show();
+    clientStage.setScene(scene);
+    clientStage.show();
   }
   
 }
