@@ -38,15 +38,15 @@ public class ViewFactory {
   }
   
   public static View getView(String paneMsg) {
+    View root = new View();
     // Create test button.
     Button btn = new Button();
     btn.setText(paneMsg);
-    btn.setOnAction(e -> Client.setScene(getView("Next Pane")));
+    btn.setOnAction(e -> root.getScene().setRoot(getView("Next Pane")));
     // Create and populate the inner pane.
     StackPane inner = new StackPane();
     inner.getChildren().add(btn);
     // Create and populate the root pane.
-    View root = new View();
     root.getChildren().add(inner);
     return root;
   }
