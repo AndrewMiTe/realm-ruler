@@ -38,13 +38,15 @@ public class Client extends Application {
   
   public static int STAGE_HEIGHT = 320;
   
-  private Stage clientStage = null;
-  
   @Override // from Application
   public void start(Stage primeStage) {
     primeStage.setTitle("Realm Ruler");
-    clientStage = primeStage;
-    setScene(ViewFactory.getMainView());
+    Scene scene = new Scene(
+        ViewFactory.getMapView(),
+        STAGE_WIDTH,
+        STAGE_HEIGHT);
+    primeStage.setScene(scene);
+    primeStage.show();
   }
 
   /**
@@ -53,13 +55,6 @@ public class Client extends Application {
    */
   public static void main(String[] args) {
     launch(args);
-  }
-  
-  public void setScene(Pane pane) {
-    if (clientStage == null) throw new RuntimeException("Stage not set.");
-    Scene scene = new Scene(pane, STAGE_WIDTH, STAGE_HEIGHT);
-    clientStage.setScene(scene);
-    clientStage.show();
   }
   
 }
