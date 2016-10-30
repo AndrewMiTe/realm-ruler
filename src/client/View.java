@@ -34,11 +34,33 @@ import javafx.scene.layout.Pane;
  */
 class View extends Pane {
   
+  /**
+   * Initiates the view with the default appearance.
+   */
+  public View() {
+    applyTemplate();
+  }
+  
+  /**
+   * Temporarily replaces the root of the scene this view belongs to with the
+   * given View.
+   * @param requestForm 
+   */
   public void requestInput(View requestForm) {
     throw new UnsupportedOperationException("Not supported yet.");
   }
   
+  /**
+   * Replaces the root of any scene this view displaced with its original view.
+   */
   public void dismissRequest() {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
+  
+  /**
+   * Configures the view to the default appearance.
+   */
+  private void applyTemplate() {
     throw new UnsupportedOperationException("Not supported yet.");
   }
   
