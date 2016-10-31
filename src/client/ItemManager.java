@@ -25,10 +25,16 @@
 package client;
 
 /**
- *
+ * Stores the most up-to-date copy of a data item obtained from a data managing
+ * object. Allows for the requesting object to get the latest copy, make
+ * modifications, and submit the changes for the realm manager to handle. Also
+ * allows for an {@link UpdateProcedure} task to be called by the item manager
+ * to inform the requesting object when the background data for the item has
+ * been changed.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
+ * @param <T> type of object that the item manager maintains.
  */
-public interface RequestItem<T> {
+public interface ItemManager<T> {
   
   /**
    * Returns the most up-to-date object from the realm manager.
