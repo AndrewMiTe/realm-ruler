@@ -56,7 +56,7 @@ public class RealmManager {
    * @param plotID number that identifies which plot data is requested.
    * @return up-to-date plot data.
    */
-  public RequestItem<Plot> requestPlot(int plotID) {
+  public ItemManager<Plot> requestPlot(int plotID) {
     throw new UnsupportedOperationException("Not supported yet.");
   }
 
@@ -65,7 +65,7 @@ public class RealmManager {
    * requested plot data they correspond to.
    * @return all up-to-date plot data.
    */
-  public List<RequestItem<Plot>> requestAllPlots() {
+  public List<ItemManager<Plot>> requestAllPlots() {
     throw new UnsupportedOperationException("Not supported yet.");
   }
   
@@ -75,7 +75,7 @@ public class RealmManager {
    * @param resourceID number that identifies which resource data is requested.
    * @return up-to-date resource data.
    */
-  public RequestItem<Resource> requestResource(int resourceID) {
+  public ItemManager<Resource> requestResource(int resourceID) {
     throw new UnsupportedOperationException("Not supported yet.");
   }
 
@@ -84,11 +84,21 @@ public class RealmManager {
    * requested resource data they correspond to.
    * @return all up-to-date resource data.
    */
-  public List<RequestItem<Resource>> requestAllResources() {
+  public List<ItemManager<Resource>> requestAllResources() {
     throw new UnsupportedOperationException("Not supported yet.");
   }
   
-  private static class RelamRequest<T> implements RequestItem {
+  /**
+   * Stores the most up-to-date copy of a data item obtained from the realm
+   * manager. Allows for the requesting object to get the latest copy, make
+   * modifications, and submit the changes for the realm manager to handle. Also
+   * allows for an {@link UpdateProcedure} task to be called by the item manager
+   * to inform the requesting object when the background data for the item has
+   * been changed.
+   * @author Andrew M. Teller(https://github.com/AndrewMiTe)
+   * @param <T> type of object that the item manager maintains.
+   */
+  private static class RelamRequest<T> implements ItemManager<T> {
 
     /**
      * The procedure prescribed by the requesting caller for what to do when the
@@ -96,16 +106,13 @@ public class RealmManager {
      */
     private UpdateProcedure updater;
     
-    public RelamRequest() {
-    }
-
     @Override // from RequestItem
     public T get() {
       throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override // from RequestItem
-    public boolean set(Object item) throws OutOfSyncException {
+    public boolean set(T item) throws OutOfSyncException {
       throw new UnsupportedOperationException("Not supported yet.");
     }
     
