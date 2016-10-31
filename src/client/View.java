@@ -29,7 +29,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 /**
@@ -38,7 +37,7 @@ import javafx.scene.paint.Paint;
  * request has been dismissed.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-class View extends Pane {
+public class View extends Pane {
   
   /**
    * Initiates the view with the default appearance.
