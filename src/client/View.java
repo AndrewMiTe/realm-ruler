@@ -24,7 +24,13 @@
 
 package client;
 
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
  * Specialized pane that accepts requests for information from the client user
@@ -61,7 +67,9 @@ class View extends Pane {
    * Configures the view to the default appearance.
    */
   private void applyTemplate() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    this.setBackground(new Background(new BackgroundFill(
+      Paint.valueOf("black"), CornerRadii.EMPTY, Insets.EMPTY
+    )));
   }
   
 }
