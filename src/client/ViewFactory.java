@@ -25,11 +25,15 @@
 package client;
 
 import static client.Client.PADDING_WIDTH;
+import static client.Client.STAGE_HEIGHT;
 import static client.Client.STAGE_WIDTH;
-import java.util.Arrays;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -47,26 +51,37 @@ public class ViewFactory {
   /**
    * Generates a View object that displays text to the user that describes what
    * input is being requested.
-   * @param message list of String objects describing to the client user what
+   * @param messages list of String objects describing to the client user what
    *        input is being requested.
    * @return view that displays a message and obtains input form the client
    *         user.
    */
-  public static View getTextRequest(String message) {
-    View root = new View();
-    // Creates inner pane.
-    StackPane inner = new StackPane();
-    inner.setPadding(
+  public static View getTextRequest(String... messages) {
+    // Adds text to the top.
+    VBox top = new VBox();
+    for (String msg : messages) {
+      Text text = new Text(msg);
+      text.setFont(Font.font("Monospace"));
+      text.setFill(Color.WHITESMOKE);
+      text.setWrappingWidth(STAGE_WIDTH - (2 * PADDING_WIDTH));
+      top.getChildren().add(text);
+    }
+    // Adds text field to the bottom.
+    AnchorPane bottom = new AnchorPane();
+    TextField input = new TextField();
+    bottom.getChildren().add(input);
+    input.setPrefWidth(STAGE_WIDTH - (2 * PADDING_WIDTH));
+    // Creates outer pane.
+    BorderPane outer = new BorderPane();
+    outer.setPrefHeight(STAGE_HEIGHT);
+    outer.setPadding(
         new Insets(PADDING_WIDTH, PADDING_WIDTH, PADDING_WIDTH, PADDING_WIDTH)
     );
-    //Adds text to pane.
-    Text text = new Text(message);
-    text.setFont(Font.font("Monospace"));
-    text.setFill(Color.WHITESMOKE);
-    text.setWrappingWidth(STAGE_WIDTH - (2 * PADDING_WIDTH));
-    inner.getChildren().add(text);
+    outer.setTop(top);
+    outer.setBottom(bottom);
     // Finalizes.
-    root.getChildren().add(inner);
+    View root = new View();
+    root.getChildren().add(outer);
     return root;
   }
   
