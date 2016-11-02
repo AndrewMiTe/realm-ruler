@@ -24,12 +24,15 @@
 
 package client;
 
+import static client.Client.PADDING_WIDTH;
+import static client.Client.STAGE_WIDTH;
+import java.util.Arrays;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 /**
  * Factory for making View objects based on the methods called and input given.
@@ -42,20 +45,27 @@ public class ViewFactory {
   }
   
   /**
-   *
-   * @param msg
-   * @return
+   * Generates a View object that displays text to the user that describes what
+   * input is being requested.
+   * @param message list of String objects describing to the client user what
+   *        input is being requested.
+   * @return view that displays a message and obtains input form the client
+   *         user.
    */
-  public static View getTextRequest(String msg) {
+  public static View getTextRequest(String message) {
     View root = new View();
+    // Creates inner pane.
     StackPane inner = new StackPane();
-    //Create text
-    Text text = new Text(msg);
+    inner.setPadding(
+        new Insets(PADDING_WIDTH, PADDING_WIDTH, PADDING_WIDTH, PADDING_WIDTH)
+    );
+    //Adds text to pane.
+    Text text = new Text(message);
     text.setFont(Font.font("Monospace"));
     text.setFill(Color.WHITESMOKE);
-    //Create text flow.
-    TextFlow textFlow = new TextFlow(text);
-    inner.getChildren().add(textFlow);
+    text.setWrappingWidth(STAGE_WIDTH - (2 * PADDING_WIDTH));
+    inner.getChildren().add(text);
+    // Finalizes.
     root.getChildren().add(inner);
     return root;
   }
