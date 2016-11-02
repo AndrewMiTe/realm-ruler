@@ -24,6 +24,8 @@
 
 package client;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,16 +37,32 @@ import java.util.Set;
  */
 public class RealmManager {
   
-  private static final RealmManager INSTANCE = new RealmManager();
+  /**
+   * Name of the file where the game data is read from and written to.
+   */
+  public static final String SAVE_FILE = "save.dat";
   
-  private final Set<View> registeredViews;
+  /**
+   * The singleton realm manager.
+   */
+  private static final RealmManager instance = new RealmManager();
+  
+  /**
+   * The set of all views that allow the realm manager to request information
+   * from the client user.
+   */
+  private final Set<View> registeredViews = new HashSet<>();
+  
+  /**
+   * The path of the save file.
+   */
+  private final Path savePath = Paths.get(SAVE_FILE);
   
   /**
    * Initializes the realm manager privately and without parameters so as to
    * encourage a proper singleton pattern.
    */
   private RealmManager() {
-    registeredViews = new HashSet<>();
   }
   
   /**
@@ -52,12 +70,12 @@ public class RealmManager {
    * @return instance of realm manager.
    */
   public static RealmManager getInstance() {
-    return INSTANCE;
+    return instance;
   }
   
   /**
    * Adds a view to the set of View objects that can take requests for
-   * information from the client that the realm ruler needs.
+   * information from the client user that the realm ruler needs.
    * @param view view that can take requests.
    * @return {@code true} if the view was not already registered.
    */
@@ -67,7 +85,7 @@ public class RealmManager {
   
   /**
    * Removes a view from the set of View objects that can take requests for
-   * information from the client that the realm ruler needs.
+   * information from the client user that the realm ruler needs.
    * @param view view that can no longer take requests.
    * @return {@code true} if the view was successfully unregistered.
    */
