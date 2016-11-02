@@ -30,7 +30,7 @@ package client;
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
 @FunctionalInterface
-interface UpdateProcedure {
+public interface UpdateProcedure {
   
   void invoke();
   
