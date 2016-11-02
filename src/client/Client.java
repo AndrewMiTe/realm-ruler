@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package client;
 
 import javafx.application.Application;
@@ -33,15 +34,17 @@ import javafx.stage.Stage;
  */
 public class Client extends Application {
   
-  public static int STAGE_WIDTH = 480;
+  public static final int STAGE_WIDTH = 480;
   
-  public static int STAGE_HEIGHT = 320;
+  public static final int STAGE_HEIGHT = 320;
+  
+  public static final int PADDING_WIDTH = 10;
   
   @Override // from Application
   public void start(Stage primeStage) {
     primeStage.setTitle("Realm Ruler");
     Scene scene = new Scene(
-        ViewFactory.getMapView(),
+        ViewFactory.getTextRequest("Simple test.\nIncludes a run on sentence so that it can be determined how long streams of text are handled by the text object inside the view object."),
         STAGE_WIDTH,
         STAGE_HEIGHT);
     primeStage.setScene(scene);
