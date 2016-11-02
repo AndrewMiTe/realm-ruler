@@ -26,6 +26,10 @@ package client;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 /**
  * Factory for making View objects based on the methods called and input given.
@@ -35,6 +39,25 @@ public class ViewFactory {
   
   public static View getMapView() {
     return getView("Map Pane");
+  }
+  
+  /**
+   *
+   * @param msg
+   * @return
+   */
+  public static View getTextRequest(String msg) {
+    View root = new View();
+    StackPane inner = new StackPane();
+    //Create text
+    Text text = new Text(msg);
+    text.setFont(Font.font("Monospace"));
+    text.setFill(Color.WHITESMOKE);
+    //Create text flow.
+    TextFlow textFlow = new TextFlow(text);
+    inner.getChildren().add(textFlow);
+    root.getChildren().add(inner);
+    return root;
   }
   
   public static View getView(String paneMsg) {
