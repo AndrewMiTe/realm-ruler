@@ -24,7 +24,9 @@
 
 package client;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Feeds data to View objects based on what information about the realm they are
@@ -35,11 +37,14 @@ public class RealmManager {
   
   private static final RealmManager INSTANCE = new RealmManager();
   
+  private final Set<View> registeredViews;
+  
   /**
    * Initializes the realm manager privately and without parameters so as to
    * encourage a proper singleton pattern.
    */
   private RealmManager() {
+    registeredViews = new HashSet<>();
   }
   
   /**
@@ -48,6 +53,26 @@ public class RealmManager {
    */
   public static RealmManager getInstance() {
     return INSTANCE;
+  }
+  
+  /**
+   * Adds a view to the set of View objects that can take requests for
+   * information from the client that the realm ruler needs.
+   * @param view view that can take requests.
+   * @return {@code true} if the view was not already registered.
+   */
+  public boolean registerView(View view) {
+    return view == null ? false : registeredViews.add(view);
+  }
+  
+  /**
+   * Removes a view from the set of View objects that can take requests for
+   * information from the client that the realm ruler needs.
+   * @param view view that can no longer take requests.
+   * @return {@code true} if the view was successfully unregistered.
+   */
+  public boolean unregisterView(View view) {
+    return registeredViews.remove(view);
   }
   
   /**
