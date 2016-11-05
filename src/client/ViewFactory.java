@@ -27,6 +27,7 @@ package client;
 import static client.Client.PADDING_WIDTH;
 import static client.Client.STAGE_HEIGHT;
 import static client.Client.STAGE_WIDTH;
+import java.util.function.Consumer;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -51,12 +52,13 @@ public class ViewFactory {
   /**
    * Generates a View object that displays text to the user that describes what
    * input is being requested.
+   * @param input function for getting text input form the view.
    * @param messages list of String objects describing to the client user what
    *        input is being requested.
    * @return view that displays a message and obtains input form the client
    *         user.
    */
-  public static View getTextRequest(String... messages) {
+  public static View getTextRequest(Consumer<String> input, String... messages) {
     // Adds text to the top.
     VBox top = new VBox();
     for (String msg : messages) {
@@ -68,9 +70,10 @@ public class ViewFactory {
     }
     // Adds text field to the bottom.
     AnchorPane bottom = new AnchorPane();
-    TextField input = new TextField();
-    bottom.getChildren().add(input);
-    input.setPrefWidth(STAGE_WIDTH - (2 * PADDING_WIDTH));
+    TextField textInput = new TextField();
+    textInput.setOnAction((e) -> input.accept(textInput.getText()));
+    bottom.getChildren().add(textInput);
+    textInput.setPrefWidth(STAGE_WIDTH - (2 * PADDING_WIDTH));
     // Creates outer pane.
     BorderPane outer = new BorderPane();
     outer.setPrefHeight(STAGE_HEIGHT);
