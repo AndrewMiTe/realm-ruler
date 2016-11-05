@@ -29,5 +29,5 @@ package client;
  * received is based on an outdated data. 
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-class OutOfSyncException extends Exception {
+public class OutOfSyncException extends Exception {
 }
