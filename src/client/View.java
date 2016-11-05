@@ -37,7 +37,7 @@ import javafx.scene.paint.Paint;
  * request has been dismissed.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class View extends Pane {
+public abstract class View extends Pane {
   
   /**
    * Initiates the view with the default appearance.
@@ -47,18 +47,20 @@ public class View extends Pane {
   }
   
   /**
-   * Temporarily replaces the root of the scene this view belongs to with the
-   * given View.
-   * @param requestForm 
+   * Changes the scene of the view to the given view object while the previous
+   * view goes into a stack. Calling {@link #unstack() unstack()} reverts the
+   * scene to the View object on the top of the stack.
+   * @param view 
    */
-  public void requestInput(View requestForm) {
+  public void stack(View view) {
     throw new UnsupportedOperationException("Not supported yet.");
   }
   
   /**
-   * Replaces the root of any scene this view displaced with its original view.
+   * Reverts the scene to a previous view. If the stack of previous views is
+   * empty, then the current view remains as the child of the scene.
    */
-  public void dismissRequest() {
+  public void unstack() {
     throw new UnsupportedOperationException("Not supported yet.");
   }
   
