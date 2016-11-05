@@ -38,11 +38,19 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
- *
+ * A view that displays text to the user that describes what input is being
+ * requested and returns the input to given function.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
 public class TextRequestView extends View {
   
+  /**
+   * Initializes the view with the given message to the client user and function
+   * to consume the user's response.
+   * @param input function for getting text input form the view.
+   * @param messages list of String objects describing to the client user what
+   *        input is being requested.
+   */
   public TextRequestView(Consumer<String> input, String... messages) {
     // Adds text to the top.
     VBox top = new VBox();
