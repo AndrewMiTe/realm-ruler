@@ -28,6 +28,6 @@ package client;
  *
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-class Resource {
+public class Resource {
   
 }
