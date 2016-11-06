@@ -43,10 +43,9 @@ public class Client extends Application {
   @Override // from Application
   public void start(Stage primeStage) {
     primeStage.setTitle("Realm Ruler");
-    Scene scene = new Scene(
-        new TextRequestView((t) -> System.out.println(t), "Simple test.", "\nIncludes a run on sentence so that it can be determined how long streams of text are handled by the text object inside the view object."),
-        STAGE_WIDTH,
-        STAGE_HEIGHT);
+    View view = new TextRequestView(System.out::println, "Main View");
+    Scene scene = new Scene(view, STAGE_WIDTH, STAGE_HEIGHT);
+    RealmManager.getInstance().registerView(view);
     primeStage.setScene(scene);
     primeStage.show();
   }
