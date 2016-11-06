@@ -29,6 +29,8 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import jminor.io.ObjectFiles;
+import jminor.io.ObjectStream;
 
 /**
  * Feeds data to View objects based on what information about the realm they are
@@ -45,7 +47,7 @@ public class RealmManager {
   /**
    * The singleton realm manager.
    */
-  private static final RealmManager instance = new RealmManager();
+  private static final RealmManager INSTANCE = new RealmManager();
   
   /**
    * The set of all views that allow the realm manager to request information
@@ -63,6 +65,8 @@ public class RealmManager {
    * encourage a proper singleton pattern.
    */
   private RealmManager() {
+    ObjectStream input = ObjectFiles.objects(savePath);
+    input.forEach(System.out::println);
   }
   
   /**
@@ -70,7 +74,7 @@ public class RealmManager {
    * @return instance of realm manager.
    */
   public static RealmManager getInstance() {
-    return instance;
+    return INSTANCE;
   }
   
   /**
