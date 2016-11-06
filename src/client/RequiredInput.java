@@ -33,9 +33,12 @@ import java.util.function.BiFunction;
  */
 public enum RequiredInput {
   
+  /**
+   * The phrase that refers to name of the realm's ruler.
+   */
   RULERS_NAME(
-      new String(),
-      (o, s) -> {return s;},
+      new Phrase(),
+      (o, s) -> {return ((Phrase)o).setPhrase(s);},
       "Well hello there. I can't say I've seen you here before. Welcome to " +
       "the Abyss! Its an endless dimension of chaos that contains an " +
       "infinite number of planes of existence. Each plane, or realm, is " +
@@ -46,30 +49,62 @@ public enum RequiredInput {
       "formalities out of the way. My name is Steve. Who might you be?"
   );
   
+  /**
+   * @see #getInputType()
+   */
   private final Object inputType;
 
+  /**
+   * @see #getResolveInput()
+   */
   private final BiFunction<Object, String, Object> resolveInput;
 
+  /**
+   * @see #getMessage()
+   */
   private final String[] message;
   
+  /**
+   * Initializes the required input with all of the properties explicitly set.
+   * @param inputType {@see #getInputType()}
+   * @param resolveInput {@see #getResolveInput()}
+   * @param message {@see #getMessage()}
+   * @throws IllegalArgumentException if any parameter is {@code null}. 
+   */
   private RequiredInput(Object inputType,
       BiFunction<Object, String, Object> resolveInput, String... message) {
+    if (inputType == null) 
+      throw new IllegalArgumentException("inputType: null");
     this.inputType = inputType;
+    if (resolveInput == null) 
+      throw new IllegalArgumentException("resolveInput: null");
     this.resolveInput = resolveInput;
+    if (message == null) 
+      throw new IllegalArgumentException("message: null");
     this.message = message;
   }
 
+  /**
+   * @return object who's class is the type required by the required input.
+   */
   public Object getInputType() {
     return inputType;
   }
 
+  /**
+   * @return function that resolves how the input is incorporated into a final
+   *         object.
+   */
   public BiFunction<Object, String, Object> getResolveInput() {
     return resolveInput;
   }
 
+  /**
+   * @return text to be displayed to the client user that describes the input
+   *         being requested.
+   */
   public String[] getMessage() {
     return message;
   }
-  
    
 }
