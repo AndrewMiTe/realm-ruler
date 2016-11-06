@@ -46,11 +46,25 @@ public enum RequiredInput {
       "formalities out of the way. My name is Steve. Who might you be?"
   );
   
+  private final Object inputType;
+
+  private final BiFunction<Object, String, Object> resolveInput;
+
   private final String[] message;
   
   private RequiredInput(Object inputType,
       BiFunction<Object, String, Object> resolveInput, String... message) {
+    this.inputType = inputType;
+    this.resolveInput = resolveInput;
     this.message = message;
+  }
+
+  public Object getInputType() {
+    return inputType;
+  }
+
+  public BiFunction<Object, String, Object> getResolveInput() {
+    return resolveInput;
   }
 
   public String[] getMessage() {
