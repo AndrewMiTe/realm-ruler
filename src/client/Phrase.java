@@ -39,22 +39,11 @@ public class Phrase {
   /**
    * @see #setRequirement
    */
-  private RequiredInput requirement;
-
-  /**
-   * Initializes an illegal phrase and sets the requirement property that the
-   * phrase is to fulfill.
-   * @param requirement {@see #setRequirement}
-   */
-  public Phrase(RequiredInput requirement) {
-    if (requirement == null)
-      throw new IllegalArgumentException("requirement: null");
-    this.requirement = requirement;
-  }
+  private RequiredInput requirement = null;
 
   public boolean isLegal() {
     assert phrase != null;
-    return !phrase.isEmpty();
+    return !phrase.isEmpty() && (requirement != null);
   }
   
   /**
@@ -68,13 +57,15 @@ public class Phrase {
 
   /**
    * @param phrase text to meet the requirement.
+   * @return this phrase.
    * @throws IllegalArgumentException if the given phrase is {@code null} or an
    *         empty string.
    */
-  public void setPhrase(String phrase) {
+  public Phrase setPhrase(String phrase) {
     if (phrase == null) throw new IllegalArgumentException("phrase: null");
     if (phrase.isEmpty()) throw new IllegalArgumentException("phrase: empty");
     this.phrase = phrase;
+    return this;
   }
 
   /**
@@ -88,12 +79,14 @@ public class Phrase {
 
   /**
    * @param requirement requirement that the text fulfills.
+   * @return this phrase.
    * @throws IllegalArgumentException if the given requirement is {@code null}.
    */
-  public void setRequirement(RequiredInput requirement) {
+  public Phrase setRequirement(RequiredInput requirement) {
     if (requirement == null) 
       throw new IllegalArgumentException("requirement: null");
     this.requirement = requirement;
+    return this;
   }
   
 }
