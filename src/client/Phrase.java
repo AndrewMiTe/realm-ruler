@@ -29,7 +29,7 @@ package client;
  * the client's continued operation.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class Phrase {
+public class Phrase implements DataItem {
   
   /**
    * @see #setPhrase
@@ -68,10 +68,7 @@ public class Phrase {
     return this;
   }
 
-  /**
-   * @return requirement property.
-   * @see #setRequirement
-   */
+  @Override // from DataItem
   public RequiredInput getRequirement() {
     assert requirement != null;
     return requirement;
