@@ -24,13 +24,16 @@
 
 package client;
 
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import jminor.io.ObjectFiles;
-import jminor.io.ObjectStream;
 
 /**
  * Feeds data to View objects based on what information about the realm they are
@@ -65,8 +68,7 @@ public class RealmManager {
    * encourage a proper singleton pattern.
    */
   private RealmManager() {
-    ObjectStream input = ObjectFiles.objects(savePath);
-    input.forEach(System.out::println);
+    checkRequirements();
   }
   
   /**
@@ -133,6 +135,30 @@ public class RealmManager {
    */
   public List<ItemManager<Resource>> requestAllResources() {
     throw new UnsupportedOperationException("Not supported yet.");
+  }
+
+  private void checkRequirements() {
+    try {
+      Files.createFile(savePath);
+    }
+    catch (FileAlreadyExistsException e) {
+    }
+    catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    Set<RequiredInput> fulfilledRequirements = ObjectFiles.objects(savePath)
+        .filter(o -> o instanceof DataItem)
+        .map(o -> ((DataItem)o).getRequirement())
+        .filter(o -> o != null)
+        .collect(Collectors.toSet());
+    for (RequiredInput r : RequiredInput.values()) {
+      if (!fulfilledRequirements.contains(r)) {
+        TextRequestView request = new TextRequestView(
+            (i) -> r.getResolveInput().apply(r.getInputType(), i),
+            r.getMessage());
+        // todo: stack request to all registered views.
+      }
+    }
   }
   
   /**
