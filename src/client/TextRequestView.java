@@ -85,7 +85,7 @@ public class TextRequestView extends View {
     outer.setTop(top);
     outer.setBottom(bottom);
     // Finalizes view.
-    getChildren().add(outer);
+    getInnerPane().getChildren().add(outer);    
   }
   
 }
