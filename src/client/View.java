@@ -24,13 +24,17 @@
 
 package client;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 
+// @todo fix View so that a Pane inside the View is swapped and stacked.
 /**
  * Specialized pane that accepts requests for information from the client user
  * in the form of another View object. Returns the scene to this view when the
@@ -39,10 +43,27 @@ import javafx.scene.paint.Paint;
  */
 public abstract class View extends Pane {
   
+  private Pane innerPane;
+
+  private final Deque<Pane> paneStack;
+  
   /**
    * Initiates the view with the default appearance.
    */
   public View() {
+    this(new Node[0]);
+  }
+  
+  /**
+   * Initiates the view with the default appearance and adds child nodes.
+   * @param children initial set of children for this pane.
+   */
+  public View(Node... children) {
+    super();
+    this.innerPane = new Pane(children);
+    super.getChildren().add(this.innerPane);
+    this.paneStack = new ArrayDeque<>();
+    this.paneStack.add(innerPane);
     applyTemplate();
   }
   
@@ -50,10 +71,15 @@ public abstract class View extends Pane {
    * Changes the scene of the view to the given view object while the previous
    * view goes into a stack. Calling {@link #unstack() unstack()} reverts the
    * scene to the View object on the top of the stack.
-   * @param view 
+   * @param newView 
    */
-  public void stack(View view) {
-    throw new UnsupportedOperationException("Not supported yet.");
+  public void stack(View newView) {
+    if ((newView != null) && !paneStack.contains(newView)) {
+      paneStack.push(newView);
+      innerPane = newView;
+      super.getChildren().clear();
+      super.getChildren().add(innerPane);
+    }
   }
   
   /**
@@ -71,6 +97,10 @@ public abstract class View extends Pane {
     this.setBackground(new Background(new BackgroundFill(
       Paint.valueOf("black"), CornerRadii.EMPTY, Insets.EMPTY
     )));
+  }
+  
+  public Pane getInnerPane() {
+    return innerPane;
   }
   
 }
