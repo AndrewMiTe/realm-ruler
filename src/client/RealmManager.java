@@ -51,23 +51,18 @@ public class RealmManager {
    * The singleton realm manager.
    */
   private static final RealmManager INSTANCE = new RealmManager();
+
+  private final Path savePath;
   
-  /**
-   * The set of all views that allow the realm manager to request information
-   * from the client user.
-   */
-  private final Set<View> registeredViews = new HashSet<>();
-  
-  /**
-   * The path of the save file.
-   */
-  private final Path savePath = Paths.get(SAVE_FILE);
-  
+  private final Set<View> registeredViews;
+
   /**
    * Initializes the realm manager privately and without parameters so as to
    * encourage a proper singleton pattern.
    */
   private RealmManager() {
+    this.savePath = Paths.get(SAVE_FILE);
+    this.registeredViews = new HashSet<>();
     checkRequirements();
   }
   
@@ -86,7 +81,11 @@ public class RealmManager {
    * @return {@code true} if the view was not already registered.
    */
   public boolean registerView(View view) {
-    return view == null ? false : registeredViews.add(view);
+    if (view != null && registeredViews.add(view)) {
+      checkRequirements();
+      return true;
+    }
+    return false;
   }
   
   /**
@@ -152,11 +151,13 @@ public class RealmManager {
         .filter(o -> o != null)
         .collect(Collectors.toSet());
     for (RequiredInput r : RequiredInput.values()) {
-      if (!fulfilledRequirements.contains(r)) {
+      if (!fulfilledRequirements.contains(r)) { //@todo add check for outstanding request.
         TextRequestView request = new TextRequestView(
             (i) -> r.getResolveInput().apply(r.getInputType(), i),
             r.getMessage());
-        // todo: stack request to all registered views.
+        for (View v : registeredViews) {
+          v.stack(request);
+        }
       }
     }
   }
