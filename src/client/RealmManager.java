@@ -168,8 +168,9 @@ public class RealmManager {
     for (RequiredInput r : RequiredInput.values()) {
       if (!fulfilledRequirements.contains(r) &&
           !outstandingRequests.containsKey(r)) {
+        DataItem inputType = r.getInputType().setRequirement(r);
         TextRequestView request = new TextRequestView(
-            (i) -> r.getResolveInput().apply(r.getInputType(), i),
+            (i) -> setInput(r.getResolveInput().apply(inputType, i)),
             r.getMessage());
         outstandingRequests.put(r, request);
       }
@@ -187,8 +188,21 @@ public class RealmManager {
     }
     catch (FileAlreadyExistsException e) {
     }
+    // @todo move this further up the call chain.
     catch (IOException e) {
       throw new RuntimeException(e);
+    }
+  }
+
+  private void setInput(Object input) {
+    if (!(input instanceof DataItem))
+      throw new IllegalArgumentException("input: !DataItem");
+    RequiredInput requirement = ((DataItem)input).getRequirement();
+    SO.o("" + requirement);
+    View request = outstandingRequests.remove(requirement);
+    if (request != null) {
+      SO.o("setInput(): inside if x2");
+      registeredViews.stream().forEach(v -> v.unstack(request));
     }
   }
 
