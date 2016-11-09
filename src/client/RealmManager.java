@@ -29,8 +29,10 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import jminor.io.ObjectFiles;
@@ -55,6 +57,8 @@ public class RealmManager {
   private final Path savePath;
   
   private final Set<View> registeredViews;
+  
+  private final Map<RequiredInput, View> outstandingRequests;
 
   /**
    * Initializes the realm manager privately and without parameters so as to
@@ -63,6 +67,7 @@ public class RealmManager {
   private RealmManager() {
     this.savePath = Paths.get(SAVE_FILE);
     this.registeredViews = new HashSet<>();
+    this.outstandingRequests = new HashMap<>();
     checkRequirements();
   }
   
@@ -151,15 +156,16 @@ public class RealmManager {
         .filter(o -> o != null)
         .collect(Collectors.toSet());
     for (RequiredInput r : RequiredInput.values()) {
-      if (!fulfilledRequirements.contains(r)) { //@todo add check for outstanding request.
+      if (!fulfilledRequirements.contains(r) &&
+          !outstandingRequests.containsKey(r)) {
         TextRequestView request = new TextRequestView(
             (i) -> r.getResolveInput().apply(r.getInputType(), i),
             r.getMessage());
-        for (View v : registeredViews) {
-          v.stack(request);
-        }
+        outstandingRequests.put(r, request);
       }
     }
+    registeredViews.stream().forEach(
+      v -> outstandingRequests.values().stream().forEach(o -> v.stack(o)));
   }
   
   /**
