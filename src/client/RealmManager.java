@@ -50,14 +50,25 @@ public class RealmManager {
   public static final String SAVE_FILE = "save.dat";
   
   /**
-   * The singleton realm manager.
+   * Singleton realm manager.
    */
   private static final RealmManager INSTANCE = new RealmManager();
 
+  /**
+   * Path to the save file.
+   */
   private final Path savePath;
   
+  /**
+   * View objects that allow for views requesting data from the client user to
+   * supersede them.
+   */
   private final Set<View> registeredViews;
   
+  /**
+   * Map of views requesting input from the client user who's key identifies
+   * what required input they fulfill.
+   */
   private final Map<RequiredInput, View> outstandingRequests;
 
   /**
@@ -141,15 +152,14 @@ public class RealmManager {
     throw new UnsupportedOperationException("Not supported yet.");
   }
 
+  /**
+   * Opens the save file and makes requests for any missing required data
+   * needed from the client user. The request is packaged as a View object and
+   * sent to any other View objected registered to allow the request to
+   * supersede it until the request has been filled.
+   */
   private void checkRequirements() {
-    try {
-      Files.createFile(savePath);
-    }
-    catch (FileAlreadyExistsException e) {
-    }
-    catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    createSaveFile();
     Set<RequiredInput> fulfilledRequirements = ObjectFiles.objects(savePath)
         .filter(o -> o instanceof DataItem)
         .map(o -> ((DataItem)o).getRequirement())
@@ -167,8 +177,22 @@ public class RealmManager {
     registeredViews.stream().forEach(
       v -> outstandingRequests.values().stream().forEach(o -> v.stack(o)));
   }
-  
+
   /**
+   * Ensures that the save file exists and makes an empty file if it doesn't.
+   */
+  private void createSaveFile() {
+    try {
+      Files.createFile(savePath);
+    }
+    catch (FileAlreadyExistsException e) {
+    }
+    catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+    /**
    * Stores the most up-to-date copy of a data item obtained from the realm
    * manager. Allows for the requesting object to get the latest copy, make
    * modifications, and submit the changes for the realm manager to handle. Also
