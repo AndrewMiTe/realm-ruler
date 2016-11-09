@@ -87,9 +87,20 @@ public abstract class View extends Pane {
    * empty, then the current view remains as the child of the scene.
    */
   public void unstack() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    unstack(paneStack.peek());
   }
   
+  public void unstack(Pane request) {
+    SO.o("unstack(Pane request)");
+    if (paneStack.contains(request) && paneStack.size() > 1) {
+      SO.o("unstack(): inside if");
+      paneStack.remove(request);
+      innerPane = paneStack.peek();
+      super.getChildren().clear();
+      super.getChildren().add(innerPane);
+    }
+  }
+
   /**
    * Configures the view to the default appearance.
    */
@@ -102,5 +113,5 @@ public abstract class View extends Pane {
   public Pane getInnerPane() {
     return innerPane;
   }
-  
+
 }
