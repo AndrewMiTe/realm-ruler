@@ -52,12 +52,12 @@ public enum RequiredInput {
   /**
    * @see #getInputType()
    */
-  private final Object inputType;
+  private final DataItem inputType;
 
   /**
    * @see #getResolveInput()
    */
-  private final BiFunction<Object, String, Object> resolveInput;
+  private final BiFunction<DataItem, String, DataItem> resolveInput;
 
   /**
    * @see #getMessage()
@@ -71,8 +71,8 @@ public enum RequiredInput {
    * @param message {@see #getMessage()}
    * @throws IllegalArgumentException if any parameter is {@code null}. 
    */
-  private RequiredInput(Object inputType,
-      BiFunction<Object, String, Object> resolveInput, String... message) {
+  private RequiredInput(DataItem inputType,
+      BiFunction<DataItem, String, DataItem> resolveInput, String... message) {
     if (inputType == null) 
       throw new IllegalArgumentException("inputType: null");
     this.inputType = inputType;
@@ -87,7 +87,7 @@ public enum RequiredInput {
   /**
    * @return object who's class is the type required by the required input.
    */
-  public Object getInputType() {
+  public DataItem getInputType() {
     return inputType;
   }
 
@@ -95,7 +95,7 @@ public enum RequiredInput {
    * @return function that resolves how the input is incorporated into a final
    *         object.
    */
-  public BiFunction<Object, String, Object> getResolveInput() {
+  public BiFunction<DataItem, String, DataItem> getResolveInput() {
     return resolveInput;
   }
 
