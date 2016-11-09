@@ -24,12 +24,14 @@
 
 package client;
 
+import java.io.Serializable;
+
 /**
  * Contains a phrase inputed by the client user that fulfills a requirement for
  * the client's continued operation.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class Phrase implements DataItem {
+public class Phrase implements DataItem, Serializable {
   
   /**
    * @see #setPhrase
