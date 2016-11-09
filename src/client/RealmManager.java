@@ -188,25 +188,26 @@ public class RealmManager {
     }
     catch (FileAlreadyExistsException e) {
     }
-    // @todo move this further up the call chain.
     catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
 
-  private void setInput(Object input) {
-    if (!(input instanceof DataItem))
-      throw new IllegalArgumentException("input: !DataItem");
+  private void setInput(DataItem input) {
     RequiredInput requirement = ((DataItem)input).getRequirement();
-    SO.o("" + requirement);
     View request = outstandingRequests.remove(requirement);
     if (request != null) {
-      SO.o("setInput(): inside if x2");
       registeredViews.stream().forEach(v -> v.unstack(request));
+    }
+    if (!ObjectFiles.objects(savePath)
+        .filter(o -> o instanceof DataItem)
+        .map(o -> ((DataItem)o).getRequirement())
+        .anyMatch(r -> r == requirement)) {
+      ObjectFiles.append(savePath, input);
     }
   }
 
-    /**
+  /**
    * Stores the most up-to-date copy of a data item obtained from the realm
    * manager. Allows for the requesting object to get the latest copy, make
    * modifications, and submit the changes for the realm manager to handle. Also
