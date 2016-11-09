@@ -37,4 +37,10 @@ public interface DataItem {
    */
   public RequiredInput getRequirement();
   
+  /**
+   * @param requirement requirement that the text fulfills.
+   * @return this data item.
+   */
+  public DataItem setRequirement(RequiredInput requirement);
+  
 }
