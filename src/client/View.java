@@ -34,7 +34,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 
-// @todo fix View so that a Pane inside the View is swapped and stacked.
 /**
  * Specialized pane that accepts requests for information from the client user
  * in the form of another View object. Returns the scene to this view when the
