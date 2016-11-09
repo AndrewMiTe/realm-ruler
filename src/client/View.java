@@ -90,9 +90,7 @@ public abstract class View extends Pane {
   }
   
   public void unstack(Pane request) {
-    SO.o("unstack(Pane request)");
     if (paneStack.contains(request) && paneStack.size() > 1) {
-      SO.o("unstack(): inside if");
       paneStack.remove(request);
       innerPane = paneStack.peek();
       super.getChildren().clear();
