@@ -75,10 +75,10 @@ public class Phrase implements DataItem {
   }
 
   /**
-   * @param requirement requirement that the text fulfills.
-   * @return this phrase.
+   * {@inheritDoc}
    * @throws IllegalArgumentException if the given requirement is {@code null}.
    */
+  @Override // from DataItem
   public Phrase setRequirement(RequiredInput requirement) {
     if (requirement == null) 
       throw new IllegalArgumentException("requirement: null");
