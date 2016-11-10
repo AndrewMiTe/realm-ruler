@@ -34,7 +34,22 @@ import java.util.function.BiFunction;
 public enum RequiredInput {
   
   /**
-   * The phrase that refers to name of the realm's ruler.
+   * Phrase that refers to the name of the realm.
+   */
+  REALMS_NAME(
+      new Phrase(),
+      (o, s) -> {return ((Phrase)o).setPhrase(s);},
+      "Now I think I've got exactly the place that you are looking for. The " +
+      "perfect place to start a new kingdom. Best part is that it fits right " +
+      "into your buget. You're not going to have any money left, but you'll " +
+      "own yourself a realm, so that's something.",
+      "",
+      "It doesn't have a name. You should be the first to give it one. What " +
+      "will it be?"
+  ),
+  
+  /**
+   * Phrase that refers to the name of the realm's ruler.
    */
   RULERS_NAME(
       new Phrase(),
