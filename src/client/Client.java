@@ -29,15 +29,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * Opens the client with a single view registered to the realm manager.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
 public class Client extends Application {
   
+  /**
+   * Width of the stage.
+   */
   public static final int STAGE_WIDTH = 480;
   
+  /**
+   * Height of the stage.
+   */
   public static final int STAGE_HEIGHT = 320;
   
+  /**
+   * Width of space between the stages edge and the content inside it.
+   */
   public static final int PADDING_WIDTH = 10;
   
   @Override // from Application
