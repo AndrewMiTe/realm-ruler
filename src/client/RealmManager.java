@@ -194,7 +194,7 @@ public class RealmManager {
   }
 
   private void setInput(DataItem input) {
-    RequiredInput requirement = ((DataItem)input).getRequirement();
+    RequiredInput requirement = input.getRequirement();
     View request = outstandingRequests.remove(requirement);
     if (request != null) {
       registeredViews.stream().forEach(v -> v.unstack(request));
