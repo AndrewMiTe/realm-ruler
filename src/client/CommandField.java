@@ -65,7 +65,9 @@ public class CommandField  {
       if (text.equalsIgnoreCase("EXIT")) {
         ((Stage)returnValue.getScene().getWindow()).close();
       }
-      ifNoCommand.accept(text);
+      else {
+        ifNoCommand.accept(text);
+      }
     });
     return returnValue;
   }
