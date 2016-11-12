@@ -41,10 +41,9 @@ public class Phrase implements DataItem, Serializable {
   /**
    * @see #setRequirement
    */
-  private RequiredInput requirement = null;
+  private String requirement = null;
 
   public boolean isLegal() {
-    assert phrase != null;
     return !phrase.isEmpty() && (requirement != null);
   }
   
@@ -53,7 +52,6 @@ public class Phrase implements DataItem, Serializable {
    * @see #setPhrase
    */
   public String getPhrase() {
-    assert phrase != null;
     return phrase;
   }
 
@@ -72,8 +70,7 @@ public class Phrase implements DataItem, Serializable {
 
   @Override // from DataItem
   public RequiredInput getRequirement() {
-    assert requirement != null;
-    return requirement;
+    return RequiredInput.valueOf(requirement);
   }
 
   /**
@@ -84,8 +81,13 @@ public class Phrase implements DataItem, Serializable {
   public Phrase setRequirement(RequiredInput requirement) {
     if (requirement == null) 
       throw new IllegalArgumentException("requirement: null");
-    this.requirement = requirement;
+    this.requirement = requirement.name();
     return this;
+  }
+  
+  @Override // from Object
+  public String toString() {
+    return "" + requirement + ": " + phrase;
   }
   
 }
