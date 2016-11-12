@@ -31,13 +31,9 @@ import java.util.function.Consumer;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -67,14 +63,7 @@ public class TextRequestView extends View {
     }
     // Adds text field to the bottom.
     AnchorPane bottom = new AnchorPane();
-    TextField textInput = new TextField();
-    textInput.setOnAction((e) -> input.accept(textInput.getText()));
-    textInput.setBackground(new Background(new BackgroundFill(
-      Paint.valueOf("black"), CornerRadii.EMPTY, Insets.EMPTY
-    )));
-    textInput.setPrefWidth(STAGE_WIDTH - (2 * PADDING_WIDTH));
-    textInput.setFont(Font.font("Monospace"));
-    textInput.setStyle("-fx-text-fill: whitesmoke");
+    TextField textInput = CommandField.get((t) -> input.accept(t));
     bottom.getChildren().add(textInput);
     // Creates outer border pane.
     BorderPane outer = new BorderPane();
