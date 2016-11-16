@@ -1,5 +1,8 @@
+### Realm Ruler ###
 
-# Created by https://www.gitignore.io/api/java,netbeans,gradle
+# Client save file
+save.dat
+
 
 ### NetBeans ###
 nbproject/private/
@@ -37,6 +40,3 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
-
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
