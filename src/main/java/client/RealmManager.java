@@ -203,7 +203,10 @@ public class RealmManager {
         .filter(o -> o instanceof DataItem)
         .map(o -> ((DataItem)o).getRequirement())
         .anyMatch(r -> r == requirement)) {
-      ObjectFiles.append(savePath, input);
+      List<Object> objects = ObjectFiles.objects(savePath)
+          .collect(Collectors.toList());
+      objects.add(input);
+      ObjectFiles.write(savePath, objects.toArray());
     }
   }
 
