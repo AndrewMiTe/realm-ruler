@@ -29,13 +29,13 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import io.ObjectFiles;
+import java.util.TreeMap;
 
 /**
  * Feeds data to View objects based on what information about the realm they are
@@ -78,7 +78,7 @@ public class RealmManager {
   private RealmManager() {
     this.savePath = Paths.get(SAVE_FILE);
     this.registeredViews = new HashSet<>();
-    this.outstandingRequests = new HashMap<>();
+    this.outstandingRequests = new TreeMap<>();
     checkRequirements();
   }
   
