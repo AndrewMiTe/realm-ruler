@@ -60,7 +60,7 @@ public class CommandField  {
     returnValue.setStyle("-fx-text-fill: whitesmoke");
     // Set event action
     returnValue.setOnAction(e -> {
-      String text = returnValue.getText();
+      String text = returnValue.getText().trim();
       returnValue.setText("");
       if (text.equalsIgnoreCase("EXIT")) {
         ((Stage)returnValue.getScene().getWindow()).close();
