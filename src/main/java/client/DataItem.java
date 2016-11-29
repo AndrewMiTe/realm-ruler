@@ -28,19 +28,29 @@ package client;
  *
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public interface DataItem {
+public abstract class DataItem {
   
+  /**
+   * @see #setRequirement
+   */
+private String requirement = null;
+
   /**
    * Returns the required input that this data item satisfies. Returns a null
    * value if it fulfills no required input.
    * @return the required input that the item satisfies.
    */
-  public RequiredInput getRequirement();
+  public RequiredInput getRequirement() {
+    return RequiredInput.valueOf(requirement);
+  }
   
   /**
    * @param requirement requirement that the text fulfills.
    * @return this data item.
    */
-  public DataItem setRequirement(RequiredInput requirement);
+  public DataItem setRequirement(RequiredInput requirement) {
+    this.requirement = requirement.name();
+    return this;
+  }
   
 }
