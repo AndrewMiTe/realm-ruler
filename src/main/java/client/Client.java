@@ -24,16 +24,24 @@
 
 package client;
 
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
+import manager.View;
 import manager.RealmManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import manager.DataItem;
+import manager.RequiredInput;
 
 /**
  * Opens the client with a single view registered to the realm manager.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class Client extends Application {
+public class Client extends Application implements View {
   
   /**
    * Width of the stage.
@@ -50,14 +58,26 @@ public class Client extends Application {
    */
   public static final int PADDING_WIDTH = 10;
   
+  private final Set<RequiredInput> requestedInputs;
+  
+  private final Deque<Pane> paneStack;
+  
+  private Stage primeStage;
+
+  public Client() {
+    this.requestedInputs = new HashSet<>();
+    this.paneStack = new LinkedList<>();
+  }
+  
   @Override // from Application
   public void start(Stage primeStage) {
+    this.primeStage = primeStage;
     primeStage.setTitle("Realm Ruler");
-    View view = new TextRequestView(System.out::println, "Main View");
-    Scene scene = new Scene(view, STAGE_WIDTH, STAGE_HEIGHT);
-    RealmManager.getInstance().registerView(view);
+    Pane pane = new TextRequestPane(System.out::println, "Main View");
+    Scene scene = new Scene(pane, STAGE_WIDTH, STAGE_HEIGHT);
     primeStage.setScene(scene);
     primeStage.show();
+    RealmManager.getInstance().registerView(this);
   }
 
   /**
@@ -66,6 +86,23 @@ public class Client extends Application {
    */
   public static void main(String[] args) {
     launch(args);
+  }
+
+  @Override
+  public void request(RequiredInput request) {
+    if ((request != null) && !requestedInputs.add(request)) {
+      DataItem item = request.getInputType().setRequirement(request);
+      TextRequestPane pane = new TextRequestPane(
+          i -> RealmManager.getInstance().setInput(
+              request.getResolveInput().apply(item, i)),
+          request.getMessage());
+      paneStack.offerFirst(pane);
+      primeStage.setScene(new Scene(pane));
+    }
+  }
+
+  @Override
+  public void rescind(RequiredInput request) {
   }
   
 }
