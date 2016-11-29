@@ -26,13 +26,6 @@ package manager;
 
 import client.TextRequestView;
 import client.View;
-import manager.RequiredInput;
-import manager.UpdateProcedure;
-import manager.Resource;
-import manager.Plot;
-import manager.OutOfSyncException;
-import manager.ItemManager;
-import manager.DataItem;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;

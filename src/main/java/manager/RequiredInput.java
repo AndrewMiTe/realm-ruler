@@ -24,8 +24,6 @@
 
 package manager;
 
-import manager.Phrase;
-import manager.DataItem;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
