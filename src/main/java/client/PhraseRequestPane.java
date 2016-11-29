@@ -47,7 +47,7 @@ import javafx.scene.text.Text;
  * requested and returns the input to given function.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class TextRequestPane extends Pane {
+public class PhraseRequestPane extends Pane {
   
   /**
    * Initializes the view with the given message to the client user and function
@@ -56,7 +56,7 @@ public class TextRequestPane extends Pane {
    * @param messages list of String objects describing to the client user what
    *        input is being requested.
    */
-  public TextRequestPane(Consumer<String> input, String... messages) {
+  public PhraseRequestPane(Consumer<String> input, String... messages) {
     applyTemplate();
     // Adds text to the top.
     VBox top = new VBox();

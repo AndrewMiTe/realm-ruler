@@ -73,7 +73,7 @@ public class Client extends Application implements View {
   public void start(Stage primeStage) {
     this.primeStage = primeStage;
     primeStage.setTitle("Realm Ruler");
-    Pane pane = new TextRequestPane(System.out::println, "Main View");
+    Pane pane = new PhraseRequestPane(System.out::println, "Main View");
     Scene scene = new Scene(pane, STAGE_WIDTH, STAGE_HEIGHT);
     primeStage.setScene(scene);
     primeStage.show();
@@ -92,7 +92,7 @@ public class Client extends Application implements View {
   public void request(RequiredInput request) {
     if ((request != null) && requestedInputs.add(request)) {
       DataItem item = request.getInputType().setRequirement(request);
-      TextRequestPane pane = new TextRequestPane(
+      PhraseRequestPane pane = new PhraseRequestPane(
           i -> RealmManager.getInstance().setInput(
               request.getResolveInput().apply(item, i)),
           request.getMessage());
