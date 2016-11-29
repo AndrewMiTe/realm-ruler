@@ -31,7 +31,7 @@ import java.io.Serializable;
  * the client's continued operation.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class Phrase implements DataItem, Serializable {
+public class Phrase extends DataItem implements  Serializable {
   
   /**
    * @see #setPhrase
@@ -68,11 +68,6 @@ public class Phrase implements DataItem, Serializable {
     return this;
   }
 
-  @Override // from DataItem
-  public RequiredInput getRequirement() {
-    return RequiredInput.valueOf(requirement);
-  }
-
   /**
    * {@inheritDoc}
    * @throws IllegalArgumentException if the given requirement is {@code null}.
@@ -81,8 +76,7 @@ public class Phrase implements DataItem, Serializable {
   public Phrase setRequirement(RequiredInput requirement) {
     if (requirement == null) 
       throw new IllegalArgumentException("requirement: null");
-    this.requirement = requirement.name();
-    return this;
+    return (Phrase)super.setRequirement(requirement);
   }
   
   @Override // from Object
