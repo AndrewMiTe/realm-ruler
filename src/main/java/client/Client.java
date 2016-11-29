@@ -63,7 +63,7 @@ public class Client extends Application implements View {
   private final Deque<Pane> paneStack;
   
   private Stage primeStage;
-
+  
   public Client() {
     this.requestedInputs = new HashSet<>();
     this.paneStack = new LinkedList<>();
@@ -90,14 +90,14 @@ public class Client extends Application implements View {
 
   @Override
   public void request(RequiredInput request) {
-    if ((request != null) && !requestedInputs.add(request)) {
+    if ((request != null) && requestedInputs.add(request)) {
       DataItem item = request.getInputType().setRequirement(request);
       TextRequestPane pane = new TextRequestPane(
           i -> RealmManager.getInstance().setInput(
               request.getResolveInput().apply(item, i)),
           request.getMessage());
       paneStack.offerFirst(pane);
-      primeStage.setScene(new Scene(pane));
+      primeStage.getScene().setRoot(pane);
     }
   }
 
