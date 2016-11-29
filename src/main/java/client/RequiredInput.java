@@ -25,6 +25,7 @@
 package client;
 
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 /**
  * Enumerates the required input, the type of input desired, and the message
@@ -37,7 +38,7 @@ public enum RequiredInput {
    * Phrase that refers to the name of the realm.
    */
   REALMS_NAME(
-      new Phrase(),
+      () -> new Phrase(),
       (o, s) -> {return ((Phrase)o).setPhrase(s);},
       "Now I think I've got exactly the place that you are looking for. The " +
       "perfect place to start a new kingdom. Best part is that it fits right " +
@@ -52,7 +53,7 @@ public enum RequiredInput {
    * Phrase that refers to the name of the realm's ruler.
    */
   RULERS_NAME(
-      new Phrase(),
+      () -> new Phrase(),
       (o, s) -> {return ((Phrase)o).setPhrase(s);},
       "Well hello there. I can't say I've seen you here before. Welcome to " +
       "the Abyss! Its an endless dimension of chaos that contains an " +
@@ -86,11 +87,11 @@ public enum RequiredInput {
    * @param message {@see #getMessage()}
    * @throws IllegalArgumentException if any parameter is {@code null}. 
    */
-  private RequiredInput(DataItem inputType,
+  private RequiredInput(Supplier<DataItem> inputType,
       BiFunction<DataItem, String, DataItem> resolveInput, String... message) {
     if (inputType == null) 
       throw new IllegalArgumentException("inputType: null");
-    this.inputType = inputType;
+    this.inputType = inputType.get();
     if (resolveInput == null) 
       throw new IllegalArgumentException("resolveInput: null");
     this.resolveInput = resolveInput;
