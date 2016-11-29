@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package client;
+package manager;
 
 /**
- *
+ * Exception to be thrown by the realm manager when a modified item it has
+ * received is based on an outdated data. 
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class Resource {
-  
+public class OutOfSyncException extends Exception {
 }

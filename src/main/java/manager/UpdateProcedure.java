@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package client;
+package manager;
 
 /**
  * Functional interface for performing tasks after a requested data item has

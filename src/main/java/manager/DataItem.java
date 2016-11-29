@@ -22,12 +22,25 @@
  * SOFTWARE.
  */
 
-package client;
+package manager;
 
 /**
  *
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class Plot {
+public interface DataItem {
+  
+  /**
+   * Returns the required input that this data item satisfies. Returns a null
+   * value if it fulfills no required input.
+   * @return the required input that the item satisfies.
+   */
+  public RequiredInput getRequirement();
+  
+  /**
+   * @param requirement requirement that the text fulfills.
+   * @return this data item.
+   */
+  public DataItem setRequirement(RequiredInput requirement);
   
 }

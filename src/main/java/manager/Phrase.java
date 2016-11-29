@@ -22,8 +22,9 @@
  * SOFTWARE.
  */
 
-package client;
+package manager;
 
+import manager.DataItem;
 import java.io.Serializable;
 
 /**

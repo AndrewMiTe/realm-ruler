@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package client;
+package manager;
 
 /**
  * Stores the most up-to-date copy of a data item obtained from a data managing
