@@ -24,8 +24,6 @@
 
 package manager;
 
-import client.TextRequestView;
-import client.View;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -33,11 +31,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import io.ObjectFiles;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Feeds data to View objects based on what information about the realm they are
@@ -71,7 +68,7 @@ public class RealmManager {
    * Map of views requesting input from the client user who's key identifies
    * what required input they fulfill.
    */
-  private final Map<RequiredInput, View> outstandingRequests;
+  private final Set<RequiredInput> outstandingInputs;
 
   /**
    * Initializes the realm manager privately and without parameters so as to
@@ -80,7 +77,7 @@ public class RealmManager {
   private RealmManager() {
     this.savePath = Paths.get(SAVE_FILE);
     this.registeredViews = new HashSet<>();
-    this.outstandingRequests = new TreeMap<>();
+    this.outstandingInputs = new TreeSet<>();
     checkRequirements();
   }
   
@@ -168,17 +165,12 @@ public class RealmManager {
         .filter(o -> o != null)
         .collect(Collectors.toSet());
     for (RequiredInput rq : RequiredInput.values()) {
-      if (!fulfilledRequirements.contains(rq) &&
-          !outstandingRequests.containsKey(rq)) {
-        DataItem inputType = rq.getInputType().setRequirement(rq);
-        TextRequestView request = new TextRequestView(
-            (i) -> setInput(rq.getResolveInput().apply(inputType, i)),
-            rq.getMessage());
-        outstandingRequests.put(rq, request);
+      if (!fulfilledRequirements.contains(rq)) {
+        outstandingInputs.add(rq);
       }
     }
     registeredViews.stream().forEach(
-        v -> outstandingRequests.values().stream().forEach(o -> v.stack(o)));
+        v -> outstandingInputs.stream().forEach(rq -> v.request(rq)));
   }
 
   /**
@@ -195,20 +187,20 @@ public class RealmManager {
     }
   }
 
-  private void setInput(DataItem input) {
+  public void setInput(DataItem input) {
     RequiredInput requirement = input.getRequirement();
-    View request = outstandingRequests.remove(requirement);
-    if (request != null) {
-      registeredViews.stream().forEach(v -> v.unstack(request));
-    }
-    if (!ObjectFiles.objects(savePath)
-        .filter(o -> o instanceof DataItem)
-        .map(o -> ((DataItem)o).getRequirement())
-        .anyMatch(r -> r == requirement)) {
-      List<Object> objects = ObjectFiles.objects(savePath)
-          .collect(Collectors.toList());
-      objects.add(input);
-      ObjectFiles.write(savePath, objects.toArray());
+    if (requirement != null) {
+      if (!ObjectFiles.objects(savePath)
+          .filter(o -> o instanceof DataItem)
+          .map(o -> ((DataItem)o).getRequirement())
+          .anyMatch(r -> r == requirement)) {
+        List<Object> objects = ObjectFiles.objects(savePath)
+            .collect(Collectors.toList());
+        objects.add(input);
+        ObjectFiles.write(savePath, objects.toArray());
+      }
+      outstandingInputs.remove(requirement);
+      registeredViews.stream().forEach(v -> v.rescind(requirement));
     }
   }
 
