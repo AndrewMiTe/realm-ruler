@@ -165,18 +165,18 @@ public class RealmManager {
         .map(o -> ((DataItem)o).getRequirement())
         .filter(o -> o != null)
         .collect(Collectors.toSet());
-    for (RequiredInput r : RequiredInput.values()) {
-      if (!fulfilledRequirements.contains(r) &&
-          !outstandingRequests.containsKey(r)) {
-        DataItem inputType = r.getInputType().setRequirement(r);
+    for (RequiredInput rq : RequiredInput.values()) {
+      if (!fulfilledRequirements.contains(rq) &&
+          !outstandingRequests.containsKey(rq)) {
+        DataItem inputType = rq.getInputType().setRequirement(rq);
         TextRequestView request = new TextRequestView(
-            (i) -> setInput(r.getResolveInput().apply(inputType, i)),
-            r.getMessage());
-        outstandingRequests.put(r, request);
+            (i) -> setInput(rq.getResolveInput().apply(inputType, i)),
+            rq.getMessage());
+        outstandingRequests.put(rq, request);
       }
     }
     registeredViews.stream().forEach(
-      v -> outstandingRequests.values().stream().forEach(o -> v.stack(o)));
+        v -> outstandingRequests.values().stream().forEach(o -> v.stack(o)));
   }
 
   /**
@@ -186,10 +186,10 @@ public class RealmManager {
     try {
       Files.createFile(savePath);
     }
-    catch (FileAlreadyExistsException e) {
+    catch (FileAlreadyExistsException ex) {
     }
-    catch (IOException e) {
-      throw new RuntimeException(e);
+    catch (IOException ex) {
+      throw new RuntimeException(ex);
     }
   }
 
