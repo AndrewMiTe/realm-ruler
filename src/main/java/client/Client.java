@@ -57,12 +57,35 @@ public class Client extends Application implements View {
    */
   public static final int PADDING_WIDTH = 10;
   
+  /**
+   * Stores which required inputs have been requested by the realm manager and
+   * what Pane object is associated with getting the input from the client user.
+   */
   private final Map<RequiredInput, Pane> requestedInputs;
   
+  /**
+   * Organizes the various Pane objects associated with this stage into a LIFO
+   * queue. This determines what pane is shown next of the top-most Pane is
+   * removed.
+   */
   private final Deque<Pane> paneStack;
   
+  /**
+   * Reference to the stage the application was started with.
+   */
   private Stage primeStage;
   
+  /**
+   * Legacy method.
+   * @param args the command line arguments
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+
+  /**
+   * Initializes the client.
+   */
   public Client() {
     this.requestedInputs = new HashMap<>();
     this.paneStack = new LinkedList<>();
@@ -78,14 +101,6 @@ public class Client extends Application implements View {
     primeStage.setScene(scene);
     primeStage.show();
     RealmManager.getInstance().registerView(this);
-  }
-
-  /**
-   * Legacy method.
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    launch(args);
   }
 
   @Override
