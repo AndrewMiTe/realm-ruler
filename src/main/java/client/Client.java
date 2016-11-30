@@ -24,16 +24,23 @@
 
 package client;
 
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import manager.View;
 import manager.RealmManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import manager.RequiredInput;
 
 /**
  * Opens the client with a single view registered to the realm manager.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class Client extends Application {
+public class Client extends Application implements View {
   
   /**
    * Width of the stage.
@@ -50,14 +57,27 @@ public class Client extends Application {
    */
   public static final int PADDING_WIDTH = 10;
   
+  private final Map<RequiredInput, Pane> requestedInputs;
+  
+  private final Deque<Pane> paneStack;
+  
+  private Stage primeStage;
+  
+  public Client() {
+    this.requestedInputs = new HashMap<>();
+    this.paneStack = new LinkedList<>();
+  }
+  
   @Override // from Application
   public void start(Stage primeStage) {
+    this.primeStage = primeStage;
     primeStage.setTitle("Realm Ruler");
-    View view = new TextRequestView(System.out::println, "Main View");
-    Scene scene = new Scene(view, STAGE_WIDTH, STAGE_HEIGHT);
-    RealmManager.getInstance().registerView(view);
+    Pane pane = new PhraseRequestPane(System.out::println, "Main View");
+    paneStack.offerFirst(pane);
+    Scene scene = new Scene(pane, STAGE_WIDTH, STAGE_HEIGHT);
     primeStage.setScene(scene);
     primeStage.show();
+    RealmManager.getInstance().registerView(this);
   }
 
   /**
@@ -66,6 +86,32 @@ public class Client extends Application {
    */
   public static void main(String[] args) {
     launch(args);
+  }
+
+  @Override
+  public void request(RequiredInput request) {
+    if (request != null) {
+      Pane pane = RequestPanes.get(request);
+      if (requestedInputs.putIfAbsent(request, pane) == null) {
+        if (paneStack.offerFirst(pane)) {
+          primeStage.getScene().setRoot(pane);
+        }
+        else {
+          requestedInputs.remove(request);
+        }
+      }
+    }
+  }
+
+  @Override
+  public void rescind(RequiredInput request) {
+    if (request != null) {
+      Pane pane = requestedInputs.remove(request);
+      if (pane != null && (paneStack.size() > 1)) {
+        paneStack.remove(pane);
+        primeStage.getScene().setRoot(paneStack.peek());
+      }
+    }
   }
   
 }

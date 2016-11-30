@@ -31,9 +31,14 @@ import java.util.function.Consumer;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -42,7 +47,7 @@ import javafx.scene.text.Text;
  * requested and returns the input to given function.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class TextRequestView extends View {
+public class PhraseRequestPane extends Pane {
   
   /**
    * Initializes the view with the given message to the client user and function
@@ -51,7 +56,8 @@ public class TextRequestView extends View {
    * @param messages list of String objects describing to the client user what
    *        input is being requested.
    */
-  public TextRequestView(Consumer<String> input, String... messages) {
+  public PhraseRequestPane(Consumer<String> input, String... messages) {
+    applyTemplate();
     // Adds text to the top.
     VBox top = new VBox();
     for (String msg : messages) {
@@ -74,7 +80,16 @@ public class TextRequestView extends View {
     outer.setTop(top);
     outer.setBottom(bottom);
     // Finalizes view.
-    getInnerPane().getChildren().add(outer);    
+    getChildren().add(outer);    
+  }
+
+  /**
+   * Configures the view to the default appearance.
+   */
+  private void applyTemplate() {
+    this.setBackground(new Background(new BackgroundFill(
+      Paint.valueOf("black"), CornerRadii.EMPTY, Insets.EMPTY
+    )));
   }
   
 }
