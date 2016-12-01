@@ -35,7 +35,7 @@ import manager.RequiredInput;
  * required to 
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
-public class RequestPanes {
+public class ClientPanes {
   
   /**
    * Factory method for returning a Pane object able to fulfill the given input
