@@ -106,7 +106,7 @@ public class Client extends Application implements View {
   @Override // from View
   public void request(RequiredInput request) {
     if (request != null) {
-      Pane pane = ClientPanes.get(request);
+      Pane pane = RequestPanes.get(request);
       if (requestedInputs.putIfAbsent(request, pane) == null) {
         if (paneStack.offerFirst(pane)) {
           primeStage.getScene().setRoot(pane);
