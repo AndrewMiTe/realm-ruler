@@ -103,10 +103,10 @@ public class Client extends Application implements View {
     RealmManager.getInstance().registerView(this);
   }
 
-  @Override
+  @Override // from View
   public void request(RequiredInput request) {
     if (request != null) {
-      Pane pane = RequestPanes.get(request);
+      Pane pane = ClientPanes.get(request);
       if (requestedInputs.putIfAbsent(request, pane) == null) {
         if (paneStack.offerFirst(pane)) {
           primeStage.getScene().setRoot(pane);
@@ -118,7 +118,7 @@ public class Client extends Application implements View {
     }
   }
 
-  @Override
+  @Override // from View
   public void rescind(RequiredInput request) {
     if (request != null) {
       Pane pane = requestedInputs.remove(request);
