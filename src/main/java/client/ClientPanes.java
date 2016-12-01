@@ -31,8 +31,8 @@ import manager.RealmManager;
 import manager.RequiredInput;
 
 /**
- * Factory for creating a {@link Pane} object that gets all of the input
- * required to 
+ * Factory for creating a {@link Pane} object used to get input from the client
+ * user.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
 public class ClientPanes {
