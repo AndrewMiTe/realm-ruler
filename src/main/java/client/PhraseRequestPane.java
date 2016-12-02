@@ -29,6 +29,7 @@ import static client.Client.STAGE_HEIGHT;
 import static client.Client.STAGE_WIDTH;
 import java.util.function.Consumer;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -40,7 +41,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 /**
  * A view that displays text to the user that describes what input is being
@@ -61,30 +61,29 @@ public class PhraseRequestPane extends Pane {
     // Adds text to the top.
     VBox top = new VBox();
     for (String msg : messages) {
-      Text text = new Text(msg);
-      text.setFont(Font.font("Monospace"));
-      text.setFill(Color.WHITESMOKE);
-      text.setWrappingWidth(STAGE_WIDTH - (2 * PADDING_WIDTH));
-      top.getChildren().add(text);
+      Label label = new Label(msg);
+      label.setFont(Font.font("Monospace"));
+      label.setWrapText(true);
+      label.setTextFill(Color.WHITESMOKE);
+      top.getChildren().add(label);
     }
-    // Adds text field to the bottom.
+    // Adds command field to the bottom.
     AnchorPane bottom = new AnchorPane();
-    TextField textInput = CommandField.get((t) -> input.accept(t));
+    TextField textInput = CommandField.get(input::accept);
     bottom.getChildren().add(textInput);
     // Creates outer border pane.
     BorderPane outer = new BorderPane();
     outer.setPrefHeight(STAGE_HEIGHT);
-    outer.setPadding(
-        new Insets(PADDING_WIDTH, PADDING_WIDTH, PADDING_WIDTH, PADDING_WIDTH)
-    );
+    outer.setPrefWidth(STAGE_WIDTH);
+    outer.setPadding(new Insets(PADDING_WIDTH));
     outer.setTop(top);
     outer.setBottom(bottom);
-    // Finalizes view.
-    getChildren().add(outer);    
+    // Finalizes pane.
+    getChildren().add(outer);
   }
 
   /**
-   * Configures the view to the default appearance.
+   * Configures the pane to the default appearance.
    */
   private void applyTemplate() {
     this.setBackground(new Background(new BackgroundFill(
