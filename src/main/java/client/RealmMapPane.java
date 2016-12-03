@@ -24,6 +24,7 @@
 
 package client;
 
+import java.awt.Point;
 import javafx.scene.layout.Pane;
 
 /**
@@ -32,5 +33,27 @@ import javafx.scene.layout.Pane;
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
 public class RealmMapPane extends Pane {
+  
+  private final Point[] plots = {
+    new Point( 0, 0), // Plot 0, Seat of the realm
+    new Point(-2, 0), // Plot 1, Start of the inner ring
+    new Point(-1, 1), // Plot 2
+    new Point( 1, 1), // Plot 3
+    new Point( 2, 0), // Plot 4
+    new Point( 1,-1), // Plot 5
+    new Point(-1,-1), // Plot 6
+    new Point(-4, 0), // Plot 7, Start of the outer ring
+    new Point(-3, 1), // Plot 8
+    new Point(-2, 2), // Plot 9
+    new Point( 0, 2), // Plot 10
+    new Point( 2, 2), // Plot 11
+    new Point( 3, 1), // Plot 12
+    new Point( 4, 0), // Plot 13
+    new Point( 3,-1), // Plot 14
+    new Point( 2,-2), // Plot 15
+    new Point( 0,-2), // Plot 16
+    new Point(-2,-2), // Plot 17
+    new Point(-3,-1)  // Plot 18
+  };
   
 }
