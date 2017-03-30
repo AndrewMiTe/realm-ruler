@@ -27,8 +27,8 @@ package manager;
 import java.io.Serializable;
 
 /**
- * Contains a phrase inputed by the client user that fulfills a requirement for
- * the client's continued operation.
+ * Contains a String inputed by the client user that fulfills a requirement for
+ * a phrase.
  * @author Andrew M. Teller(https://github.com/AndrewMiTe)
  */
 public class Phrase implements DataItem, Serializable {
@@ -43,6 +43,10 @@ public class Phrase implements DataItem, Serializable {
    */
   private String requirement = null;
 
+  /**
+   * Returns {@code true} when the String wrapped by this object is valid.
+   * @return {@code true} when phrase is valid.
+   */
   public boolean isLegal() {
     return !phrase.isEmpty() && (requirement != null);
   }
